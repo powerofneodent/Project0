@@ -13,12 +13,14 @@ import com.mongodb.client.model.Updates;
 import project0.criteria.ProdutoCriteria;
 import project0.dao.ProdutoDAO;
 import project0.model.Produto;
+import project0.model.Sample;
 import project0.service.Results;
 import project0.util.MongoDBConnection;
 
 public class ProdutoDAOImpl implements ProdutoDAO {
 
 	private MongoCollection<Produto> produtos = null;
+	
 
 	public ProdutoDAOImpl() {
 		super();
@@ -100,5 +102,11 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 			return false;
 		}
 
+	}
+
+	@Override
+	public Produto findSampleById(String id) throws Exception {
+		Bson idFilterSample = Filters.eq("samples._id", id);
+		return produtos.find(idFilterSample).first();
 	}
 }
